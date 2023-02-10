@@ -14,6 +14,7 @@ RUN apk --update add --no-cache \
   jq \
   git \
   zip && \
+  coreutils && \
   pip install --no-cache-dir --upgrade pip awscli
 
 ENV TERRAFORM_VERSION 1.1.7
