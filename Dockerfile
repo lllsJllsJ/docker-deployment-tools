@@ -43,4 +43,19 @@ RUN set -x && \
     tar xzf ${archive} --directory /usr/local/bin/ --strip-components 1 --wildcards "**/helm" && \
     rm ${archive}
 
+ARG ARGOCD_VERSION=v2.6.3
+ARG ARGOCD_BINARY_URL=https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64
+RUN set -x && \
+    curl --location --fail --show-error --output /usr/local/bin/argocd ${ARGOCD_BINARY_URL} && \
+    chmod +x /usr/local/bin/argocd
+
+ARG MONGO_ATLAS_PROXY=https://fastdl.mongodb.org
+ARG MONGO_ATLAS_VERSION=1.5.1
+RUN set -x && \
+    location=${MONGO_ATLAS_PROXY}/mongocli/mongodb-atlas-cli_${MONGO_ATLAS_VERSION}_linux_x86_64.tar.gz && \
+    archive=/tmp/mongodb-atlas-cli.tar.gz && \
+    curl --fail --show-error --output ${archive} ${location} && \
+    tar xzf ${archive} --directory /usr/local/bin/ --strip-components 2 --wildcards "**/atlas" && \
+    rm ${archive}
+
 ENTRYPOINT ["/bin/bash", "-c"]
