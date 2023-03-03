@@ -12,6 +12,7 @@ RUN apk --update add --no-cache \
   bash \
   curl \
   jq \
+  yq \
   git \
   zip \
   coreutils && \
