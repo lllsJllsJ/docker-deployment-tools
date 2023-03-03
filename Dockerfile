@@ -12,7 +12,6 @@ RUN apk --update add --no-cache \
   bash \
   curl \
   jq \
-  yq \
   git \
   zip \
   coreutils && \
@@ -58,5 +57,11 @@ RUN set -x && \
     curl --fail --show-error --output ${archive} ${location} && \
     tar xzf ${archive} --directory /usr/local/bin/ --strip-components 2 --wildcards "**/atlas" && \
     rm ${archive}
+
+ARG YQ_VERSION=v4.31.2
+ARG YQ_BINARY_URL=https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+RUN set -x && \
+    curl --location --fail --show-error --output /usr/local/bin/yq ${YQ_BINARY_URL} && \
+    chmod +x /usr/local/bin/yq
 
 ENTRYPOINT ["/bin/bash", "-c"]
